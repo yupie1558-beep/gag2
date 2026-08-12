@@ -513,16 +513,47 @@ function UI:CreateWindow(options)
     }, main)
     window.Content = content
 
-    local minimized = false
-    minButton.Activated:Connect(function()
-        minimized = not minimized
-        content.Visible = not minimized
-        starField.Visible = not minimized
-        minButton.Text = minimized and "+" or "-"
-        self:Tween(holder, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            Size = UDim2.fromOffset(width, minimized and 40 or height),
-        })
-    end)
+    local minimized=false
+
+minButton.Activated:Connect(function()
+	minimized=not minimized
+
+	local targetHeight=minimized and 40 or height
+
+	minButton.Text=minimized and "+" or "-"
+
+	if not minimized then
+		content.Visible=true
+		starField.Visible=true
+	end
+
+	local info=TweenInfo.new(
+		0.2,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out
+	)
+
+	self:Tween(holder,info,{
+		Size=UDim2.fromOffset(width,targetHeight)
+	})
+
+	self:Tween(shadow,info,{
+		Size=UDim2.fromOffset(width,targetHeight)
+	})
+
+	self:Tween(main,info,{
+		Size=UDim2.fromOffset(width,targetHeight)
+	})
+
+	if minimized then
+		task.delay(.2,function()
+			if minimized and content.Parent then
+				content.Visible=false
+				starField.Visible=false
+			end
+		end)
+	end
+end)
 
     closeButton.Activated:Connect(function()
         if type(options.OnClose) == "function" then
