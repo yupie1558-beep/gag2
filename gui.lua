@@ -144,69 +144,69 @@ function UI:MakeDraggable(handle, target)
     end)
 end
 
-function UI:Notify(parent, title, description, duration)
-    duration = duration or 4
+function UI:Notify(parent,title,description,duration)
+	duration=duration or 4
 
-    local notificationGui = self:New("ScreenGui", {
-        Name = "ScoopHubNotification",
-        ResetOnSpawn = false,
-        ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-    }, parent)
+	local notificationGui=self:New("ScreenGui",{
+		Name="ScoopHubNotification",
+		ResetOnSpawn=false,
+		ZIndexBehavior=Enum.ZIndexBehavior.Sibling,
+	},parent)
 
-    local frame = self:New("Frame", {
-        AnchorPoint = Vector2.new(0.5, 1),
-        BackgroundColor3 = self.Theme.Bg,
-        BorderSizePixel = 0,
-        Position = UDim2.new(0.5, 0, 1, 90),
-        Size = UDim2.fromOffset(320, 70),
-        ZIndex = 20,
-    }, notificationGui)
-    self:Corner(frame, 8)
-    self:Stroke(frame, self.Theme.Red, 0.25, 1)
+	local frame=self:New("Frame",{
+		AnchorPoint=Vector2.new(1,1),
+		BackgroundColor3=self.Theme.Bg,
+		BorderSizePixel=0,
+		Position=UDim2.new(1,340,1,-24),
+		Size=UDim2.fromOffset(320,70),
+		ZIndex=20,
+	},notificationGui)
+	self:Corner(frame,8)
+	self:Stroke(frame,self.Theme.Red,0.25,1)
 
-    self:New("TextLabel", {
-        BackgroundTransparency = 1,
-        Font = self.Theme.Font,
-        Text = title or "ScoopHub",
-        TextColor3 = self.Theme.White,
-        TextSize = 13,
-        Position = UDim2.fromOffset(12, 8),
-        Size = UDim2.new(1, -24, 0, 18),
-        TextXAlignment = Enum.TextXAlignment.Left,
-        ZIndex = 21,
-    }, frame)
+	self:New("TextLabel",{
+		BackgroundTransparency=1,
+		Font=self.Theme.Font,
+		Text=title or "ScoopHub",
+		TextColor3=self.Theme.White,
+		TextSize=13,
+		Position=UDim2.fromOffset(12,8),
+		Size=UDim2.new(1,-24,0,18),
+		TextXAlignment=Enum.TextXAlignment.Left,
+		ZIndex=21,
+	},frame)
 
-    self:New("TextLabel", {
-        BackgroundTransparency = 1,
-        Font = self.Theme.FontBody,
-        Text = description or "",
-        TextColor3 = self.Theme.Muted,
-        TextSize = 12,
-        Position = UDim2.fromOffset(12, 30),
-        Size = UDim2.new(1, -24, 0, 30),
-        TextWrapped = true,
-        TextXAlignment = Enum.TextXAlignment.Left,
-        TextYAlignment = Enum.TextYAlignment.Top,
-        ZIndex = 21,
-    }, frame)
+	self:New("TextLabel",{
+		BackgroundTransparency=1,
+		Font=self.Theme.FontBody,
+		Text=description or "",
+		TextColor3=self.Theme.Muted,
+		TextSize=12,
+		Position=UDim2.fromOffset(12,30),
+		Size=UDim2.new(1,-24,0,30),
+		TextWrapped=true,
+		TextXAlignment=Enum.TextXAlignment.Left,
+		TextYAlignment=Enum.TextYAlignment.Top,
+		ZIndex=21,
+	},frame)
 
-    self:Tween(frame, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Position = UDim2.new(0.5, 0, 1, -24),
-    })
+	self:Tween(frame,TweenInfo.new(0.35,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{
+		Position=UDim2.new(1,-24,1,-24),
+	})
 
-    task.delay(duration, function()
-        if not frame.Parent then
-            return
-        end
-        self:Tween(frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-            Position = UDim2.new(0.5, 0, 1, 90),
-        })
-        task.delay(0.35, function()
-            if notificationGui then
-                notificationGui:Destroy()
-            end
-        end)
-    end)
+	task.delay(duration,function()
+		if not frame.Parent then return end
+
+		self:Tween(frame,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.In),{
+			Position=UDim2.new(1,340,1,-24),
+		})
+
+		task.delay(0.35,function()
+			if notificationGui then
+				notificationGui:Destroy()
+			end
+		end)
+	end)
 end
 
 function UI:CreateWindow(options)
